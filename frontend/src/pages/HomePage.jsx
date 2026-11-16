@@ -6,6 +6,115 @@ import ProductCard from '../components/ProductCard';
 import { updatePageMeta } from '../utils/seo';
 import { createSvgFallbackDataUri } from '../utils/fallbackData';
 
+function JewelleryCategoryIcon({ name }) {
+  const category = name.toLowerCase();
+  let iconType = 'gem';
+
+  if (category.includes('ring')) iconType = 'ring';
+  else if (
+    category.includes('necklace') ||
+    category.includes('haar') ||
+    category.includes('mangalsutra')
+  ) {
+    iconType = 'necklace';
+  } else if (category.includes('earring') || category.includes('jhumka')) {
+    iconType = 'earrings';
+  } else if (category.includes('bangle') || category.includes('kada')) {
+    iconType = 'bangles';
+  } else if (
+    category.includes('bracelet') ||
+    category.includes('armlet') ||
+    category.includes('hathphool')
+  ) {
+    iconType = 'bracelet';
+  } else if (category.includes('pendant') || category.includes('tikka')) {
+    iconType = 'pendant';
+  } else if (category.includes('nose') || category.includes('nath')) {
+    iconType = 'nose';
+  } else if (category.includes('temple')) {
+    iconType = 'temple';
+  }
+
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.35"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className="h-8 w-8"
+    >
+      {iconType === 'ring' && (
+        <>
+          <ellipse cx="12" cy="16" rx="7.5" ry="4.5" />
+          <path d="m9.5 9.5 2.5-3 2.5 3-2.5 2.5-2.5-2.5Z" />
+          <path d="M9.5 9.5h5" />
+        </>
+      )}
+      {iconType === 'necklace' && (
+        <>
+          <path d="M4 5c.6 8 3.3 13 8 17 4.7-4 7.4-9 8-17" />
+          <path d="M12 18v-3" />
+          <path d="m9.5 12.5 2.5-2.5 2.5 2.5L12 15l-2.5-2.5Z" />
+        </>
+      )}
+      {iconType === 'earrings' && (
+        <>
+          <path d="M7 5a2 2 0 1 0-2 2" />
+          <path d="M17 5a2 2 0 1 1 2 2" />
+          <path d="M5 7v4l2 3 2-3V7" />
+          <path d="M15 7v4l2 3 2-3V7" />
+          <path d="m7 14-1.5 2L7 18l1.5-2L7 14Zm10 0-1.5 2 1.5 2 1.5-2-1.5-2Z" />
+        </>
+      )}
+      {iconType === 'bangles' && (
+        <>
+          <ellipse cx="12" cy="12" rx="5" ry="8" />
+          <ellipse cx="12" cy="12" rx="8" ry="8" />
+          <path d="M7 5.8a9.5 9.5 0 0 1 10 0M7 18.2a9.5 9.5 0 0 0 10 0" />
+        </>
+      )}
+      {iconType === 'bracelet' && (
+        <>
+          <path d="M4 12a8 8 0 0 1 16 0" />
+          <path d="M4 12a8 8 0 0 0 16 0" />
+          <path d="M8 5.1 7 3.5m9.2 1.6 1-1.6M12 4V2.5" />
+          <circle cx="12" cy="20" r="1.1" />
+        </>
+      )}
+      {iconType === 'pendant' && (
+        <>
+          <path d="M5 4c1 5 3.3 8 7 10 3.7-2 6-5 7-10" />
+          <path d="m12 13 4 4-4 5-4-5 4-4Z" />
+          <path d="m8 17 8 0m-4-4v9" />
+        </>
+      )}
+      {iconType === 'nose' && (
+        <>
+          <path d="M5 5c5 1 9 5 9 10a4 4 0 0 1-8 0" />
+          <circle cx="7" cy="15" r="2.5" />
+          <path d="m7 12.5 1.2-1.5 1.2 1.5" />
+        </>
+      )}
+      {iconType === 'temple' && (
+        <>
+          <path d="M5 20V9l7-5 7 5v11" />
+          <path d="M8 20v-6a4 4 0 0 1 8 0v6M3 20h18M12 4V2" />
+          <path d="m10.5 10 1.5-1.5 1.5 1.5L12 12l-1.5-2Z" />
+        </>
+      )}
+      {iconType === 'gem' && (
+        <>
+          <path d="m12 3 8 7-8 11-8-11 8-7Z" />
+          <path d="M4 10h16M9 4.5 7.5 10 12 21l4.5-11L15 4.5" />
+        </>
+      )}
+    </svg>
+  );
+}
+
 export default function HomePage() {
   const { products, categories, collections, testimonials, settings } = useStore();
   const homepageRef = useRef(null);
@@ -205,6 +314,53 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* SHOP BY CATEGORY */}
+      <section className="border-y border-[#E6DBC9] bg-[#FBF7F0] py-10 sm:py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-7 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="mb-1 text-xs font-medium tracking-[0.12em] text-[#8C6239] uppercase">
+                Curated Silversmith &amp; Goldsmith Lineages
+              </p>
+              <h2 className="font-serif text-3xl font-semibold text-[#34241D] sm:text-4xl">
+                Shop by Jewellery Category
+              </h2>
+            </div>
+            <Link
+              to="/collections"
+              className="inline-flex w-fit items-center gap-1.5 text-xs font-medium text-[#8C6239] transition-colors hover:text-[#34241D]"
+            >
+              <span>View All {categories.length} Categories</span>
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+
+          <div className="-mx-4 overflow-x-auto overscroll-x-contain no-scrollbar sm:mx-0 sm:overflow-visible">
+            <div className="flex w-max min-w-full gap-3 px-4 pb-2 sm:grid sm:w-full sm:grid-cols-4 sm:gap-4 sm:px-0 sm:pb-0 lg:grid-cols-7">
+              {categories.map((cat, index) => (
+                <Link
+                  key={cat._id || cat.slug}
+                  to={`/collections?category=${encodeURIComponent(cat.name)}`}
+                  data-category-card
+                  style={{
+                    '--category-card-delay': `${index * 45}ms`,
+                    '--category-card-delay-mobile': `${index * 25}ms`,
+                  }}
+                  className="group flex w-[112px] shrink-0 flex-col items-center gap-3 rounded-2xl border border-transparent bg-[#FAF8F4] px-3 py-4 text-center transition-all duration-300 hover:-translate-y-1 hover:border-[#D8B982] hover:bg-white hover:shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B88A4A] sm:w-auto sm:shrink"
+                >
+                  <span className="flex h-16 w-16 items-center justify-center rounded-full border border-[#E6DBC9] bg-[#F7F2EA] text-[#8C6239] transition-all duration-300 group-hover:-translate-y-1 group-hover:border-[#C89B5C] group-hover:bg-[#F2E9DC] group-hover:text-[#34241D]">
+                    <JewelleryCategoryIcon name={cat.name} />
+                  </span>
+                  <span className="text-sm font-medium leading-snug text-[#34241D] transition-colors group-hover:text-[#8C6239]">
+                    {cat.name}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* NEW ARRIVALS */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
@@ -320,57 +476,6 @@ export default function HomePage() {
                 (newArrivals.length + index) % 2 === 0 ? 'left' : 'right'
               }
             />
-          ))}
-        </div>
-      </section>
-
-      {/* SHOP BY CATEGORY (All 13 Categories) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
-          <div>
-            <p className="text-xs text-[#8C6239] font-medium mb-1">
-              Curated Silversmith &amp; Goldsmith Lineages
-            </p>
-            <h2 className="font-sans text-3xl sm:text-4xl font-semibold text-[#34241D]">
-              Shop by Jewellery Category
-            </h2>
-          </div>
-          <Link
-            to="/collections"
-            className="text-xs font-medium text-[#8C6239] hover:text-[#34241D] inline-flex items-center gap-1.5"
-          >
-            <span>View All 13 Categories</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5">
-          {categories.map((cat, index) => (
-            <Link
-              key={cat._id || cat.slug}
-              to={`/collections?category=${encodeURIComponent(cat.name)}`}
-              data-category-card
-              style={{
-                '--category-card-delay': `${index * 45}ms`,
-                '--category-card-delay-mobile': `${index * 25}ms`,
-              }}
-              className="bg-[#FBF7F0] border border-[#E6DBC9] hover:border-[#B88A4A] rounded-xl p-4 flex flex-col justify-between transition-colors group"
-            >
-              <div className="flex items-center justify-between mb-2.5">
-                <span className="w-7 h-7 rounded-full bg-[#FAF8F4] border border-[#E6DBC9] flex items-center justify-center font-serif text-sm font-semibold text-[#8C6239] group-hover:bg-[#34241D] group-hover:text-[#FAF8F4] transition-colors">
-                  {cat.name.charAt(0)}
-                </span>
-                <span className="text-[11px] text-[#695B4E]">Explore &rarr;</span>
-              </div>
-              <div>
-                <h3 className="font-sans text-lg font-medium text-[#34241D] group-hover:text-[#B88A4A] transition-colors">
-                  {cat.name}
-                </h3>
-                <p className="text-[11px] text-[#695B4E] line-clamp-1 mt-0.5">
-                  {cat.description}
-                </p>
-              </div>
-            </Link>
           ))}
         </div>
       </section>
