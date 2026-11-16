@@ -71,6 +71,41 @@ export default function HomePage() {
     };
   }, []);
 
+  useLayoutEffect(() => {
+    const homepage = homepageRef.current;
+    if (
+      !homepage ||
+      typeof window === 'undefined' ||
+      !('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      return undefined;
+    }
+
+    const productCards = homepage.querySelectorAll(
+      '[data-home-product-card]:not([data-home-product-visible="true"])'
+    );
+    if (!productCards.length) return undefined;
+
+    homepage.dataset.productRevealReady = 'true';
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.dataset.homeProductVisible = 'true';
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -32px 0px' }
+    );
+
+    productCards.forEach((card) => observer.observe(card));
+    return () => {
+      observer.disconnect();
+      delete homepage.dataset.productRevealReady;
+    };
+  }, [products]);
+
   const activeProducts = products.filter((p) => p.isActive !== false);
   const newArrivals = activeProducts.filter((p) => p.isNewArrival).slice(0, 4);
   const bestsellers = activeProducts.filter((p) => p.isBestseller).slice(0, 4);
@@ -189,8 +224,12 @@ export default function HomePage() {
           </Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {newArrivals.map((product) => (
-            <ProductCard key={product._id} product={product} />
+          {newArrivals.map((product, index) => (
+            <ProductCard
+              key={product._id}
+              product={product}
+              mobileRevealDirection={index % 2 === 0 ? 'left' : 'right'}
+            />
           ))}
         </div>
       </section>
@@ -273,8 +312,14 @@ export default function HomePage() {
           </Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {bestsellers.map((product) => (
-            <ProductCard key={product._id} product={product} />
+          {bestsellers.map((product, index) => (
+            <ProductCard
+              key={product._id}
+              product={product}
+              mobileRevealDirection={
+                (newArrivals.length + index) % 2 === 0 ? 'left' : 'right'
+              }
+            />
           ))}
         </div>
       </section>

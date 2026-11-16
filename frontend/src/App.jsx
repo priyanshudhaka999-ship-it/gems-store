@@ -7,6 +7,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import CookieBanner from './components/CookieBanner';
+import FloatingWhatsAppButton from './components/FloatingWhatsAppButton';
 
 import HomePage from './pages/HomePage';
 import CollectionsPage from './pages/CollectionsPage';
@@ -78,6 +79,7 @@ export default function App() {
                 </Routes>
               </div>
               <Footer />
+              <FloatingWhatsAppButton />
               <CookieBanner />
             </div>
           </Router>

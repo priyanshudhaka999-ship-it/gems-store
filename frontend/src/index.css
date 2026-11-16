@@ -22,6 +22,12 @@ html {
   scroll-behavior: smooth;
 }
 
+@media (max-width: 640px) {
+  html {
+    overflow-x: hidden;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -44,6 +50,85 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+}
+
+.floating-whatsapp {
+  position: fixed;
+  right: 1rem;
+  bottom: calc(6rem + env(safe-area-inset-bottom));
+  z-index: 40;
+  display: flex;
+  width: 3.5rem;
+  height: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--gold-soft);
+  border-radius: 9999px;
+  background: #075e54;
+  color: #fff;
+  box-shadow: 0 8px 24px rgb(46 31 24 / 22%);
+}
+
+.whatsapp-tooltip {
+  position: absolute;
+  right: calc(100% + 0.75rem);
+  top: 50%;
+  visibility: hidden;
+  transform: translate(4px, -50%);
+  border: 1px solid var(--gold-secondary);
+  border-radius: 0.5rem;
+  background: var(--espresso-deep);
+  padding: 0.5rem 0.75rem;
+  color: var(--bg-main);
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    visibility 180ms ease;
+}
+
+.floating-whatsapp:hover .whatsapp-tooltip,
+.floating-whatsapp:focus-visible .whatsapp-tooltip {
+  visibility: visible;
+  transform: translate(0, -50%);
+  opacity: 1;
+}
+
+@media (min-width: 640px) {
+  .floating-whatsapp {
+    right: 1.5rem;
+    bottom: 1.5rem;
+  }
+}
+
+@keyframes whatsapp-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .floating-whatsapp {
+    animation: whatsapp-float 3.2s ease-in-out infinite;
+    transition:
+      transform 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .floating-whatsapp:hover,
+  .floating-whatsapp:focus-visible {
+    animation-play-state: paused;
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 10px 28px rgb(46 31 24 / 30%);
+  }
 }
 
 h1,
@@ -108,6 +193,29 @@ textarea:focus-visible {
     > [data-scroll-reveal='right']:not([data-scroll-visible='true']) {
     transform: translate3d(14px, 0, 0);
   }
+
+  .home-page[data-product-reveal-ready='true'] [data-home-product-card] {
+    opacity: 0;
+    transition:
+      opacity 540ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .home-page[data-product-reveal-ready='true']
+    [data-home-product-direction='left']:not([data-home-product-visible='true']) {
+    transform: translate3d(-14px, 0, 0);
+  }
+
+  .home-page[data-product-reveal-ready='true']
+    [data-home-product-direction='right']:not([data-home-product-visible='true']) {
+    transform: translate3d(14px, 0, 0);
+  }
+
+  .home-page[data-product-reveal-ready='true']
+    [data-home-product-card][data-home-product-visible='true'] {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 @keyframes hero-fade-up {
@@ -152,6 +260,24 @@ textarea:focus-visible {
 
   .hero-entrance--cta-three {
     animation-delay: 420ms;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (max-width: 640px) {
+  .collection-page[data-collection-reveal-ready='true']
+    [data-collection-card][data-collection-card-direction='left']:not([data-collection-card-visible='true']) {
+    transform: translate3d(-14px, 0, 0);
+  }
+
+  .collection-page[data-collection-reveal-ready='true']
+    [data-collection-card][data-collection-card-direction='right']:not([data-collection-card-visible='true']) {
+    transform: translate3d(14px, 0, 0);
+  }
+
+  .collection-page[data-collection-reveal-ready='true']
+    [data-collection-card][data-collection-card-visible='true'] {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
   }
 }
 

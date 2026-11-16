@@ -575,6 +575,7 @@ export default function CollectionsPage() {
                   <div
                     key={product._id}
                     data-collection-card
+                    data-collection-card-direction={index % 2 === 0 ? 'left' : 'right'}
                     className="h-full"
                     style={{ '--collection-card-delay': `${index * 55}ms` }}
                   >
