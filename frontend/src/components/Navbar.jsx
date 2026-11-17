@@ -121,7 +121,7 @@ export default function Navbar() {
         <nav
           id="mobile-navigation-drawer"
           aria-label="Mobile Navigation"
-          className="lg:hidden bg-[#2E1F18] border-t border-[#C89B5C]/25 px-4 pt-3 pb-6 space-y-1.5 text-sm font-medium shadow-xl"
+          className="mobile-navigation-drawer fixed right-0 top-20 bottom-0 z-50 w-[min(20rem,85vw)] overflow-y-auto bg-[#2E1F18] border-l border-[#C89B5C]/25 px-4 pt-3 pb-6 space-y-1.5 text-sm font-medium shadow-xl lg:hidden"
         >
           <NavLink
             to="/"

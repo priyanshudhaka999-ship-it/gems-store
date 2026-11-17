@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, MapPin, Navigation } from 'lucide-react';
+import { ArrowLeft, ArrowRight, MapPin, Navigation } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
 import ProductCard from '../components/ProductCard';
 import { updatePageMeta } from '../utils/seo';
@@ -118,6 +118,7 @@ function JewelleryCategoryIcon({ name }) {
 export default function HomePage() {
   const { products, categories, collections, testimonials, settings } = useStore();
   const homepageRef = useRef(null);
+  const categoryScrollerRef = useRef(null);
 
   useEffect(() => {
     updatePageMeta({
@@ -326,16 +327,43 @@ export default function HomePage() {
                 Shop by Jewellery Category
               </h2>
             </div>
-            <Link
-              to="/collections"
-              className="inline-flex w-fit items-center gap-1.5 text-xs font-medium text-[#8C6239] transition-colors hover:text-[#34241D]"
-            >
-              <span>View All {categories.length} Categories</span>
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+            <div className="flex items-center justify-between gap-4">
+              <Link
+                to="/collections"
+                className="inline-flex w-fit items-center gap-1.5 text-xs font-medium text-[#8C6239] transition-colors hover:text-[#34241D]"
+              >
+                <span>View All {categories.length} Categories</span>
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <div className="flex items-center gap-2 sm:hidden">
+                <button
+                  type="button"
+                  aria-label="Scroll categories left"
+                  onClick={() =>
+                    categoryScrollerRef.current?.scrollBy({ left: -224, behavior: 'smooth' })
+                  }
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-[#C89B5C] bg-[#FAF8F4] text-[#34241D] transition-colors hover:bg-[#F2E9DC] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B88A4A]"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Scroll categories right"
+                  onClick={() =>
+                    categoryScrollerRef.current?.scrollBy({ left: 224, behavior: 'smooth' })
+                  }
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-[#C89B5C] bg-[#FAF8F4] text-[#34241D] transition-colors hover:bg-[#F2E9DC] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B88A4A]"
+                >
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
           </div>
 
-          <div className="-mx-4 overflow-x-auto overscroll-x-contain no-scrollbar sm:mx-0 sm:overflow-visible">
+          <div
+            ref={categoryScrollerRef}
+            className="-mx-4 overflow-x-auto overscroll-x-contain no-scrollbar sm:mx-0 sm:overflow-visible"
+          >
             <div className="flex w-max min-w-full gap-3 px-4 pb-2 sm:grid sm:w-full sm:grid-cols-4 sm:gap-4 sm:px-0 sm:pb-0 lg:grid-cols-7">
               {categories.map((cat, index) => (
                 <Link
