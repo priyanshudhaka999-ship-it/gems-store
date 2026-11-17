@@ -579,7 +579,7 @@ export default function CollectionsPage() {
                     className="h-full"
                     style={{ '--collection-card-delay': `${index * 55}ms` }}
                   >
-                    <ProductCard product={product} />
+                    <ProductCard product={product} compact />
                   </div>
                 ))}
               </div>

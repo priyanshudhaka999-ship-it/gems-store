@@ -412,6 +412,7 @@ export default function HomePage() {
             <ProductCard
               key={product._id}
               product={product}
+              compact
               mobileRevealDirection={index % 2 === 0 ? 'left' : 'right'}
             />
           ))}
@@ -500,6 +501,7 @@ export default function HomePage() {
             <ProductCard
               key={product._id}
               product={product}
+              compact
               mobileRevealDirection={
                 (newArrivals.length + index) % 2 === 0 ? 'left' : 'right'
               }

@@ -4,7 +4,7 @@ import { Heart, MessageCircle } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
 import { formatINR, createSvgFallbackDataUri } from '../utils/fallbackData';
 
-export default function ProductCard({ product, mobileRevealDirection }) {
+export default function ProductCard({ product, mobileRevealDirection, compact = false }) {
   const { wishlist, toggleWishlist, handleWhatsAppEnquiry } = useStore();
   if (!product) return null;
 
@@ -26,7 +26,11 @@ export default function ProductCard({ product, mobileRevealDirection }) {
       className="bg-[#FBF7F0] border border-[#E6DBC9] hover:border-[#C89B5C] rounded-xl overflow-hidden flex flex-col justify-between transition-colors duration-200 shadow-sm group"
     >
       <div>
-        <div className="relative aspect-[4/5] bg-[#F2E9DC]/70 p-4 flex items-center justify-center overflow-hidden border-b border-[#E6DBC9]/60">
+        <div
+          className={`relative ${
+            compact ? 'aspect-square' : 'aspect-[4/5]'
+          } bg-[#F2E9DC]/70 p-4 flex items-center justify-center overflow-hidden border-b border-[#E6DBC9]/60`}
+        >
           <Link
             to={`/product/${product.slug}`}
             className="w-full h-full flex items-center justify-center focus:outline-none"
