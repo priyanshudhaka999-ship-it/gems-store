@@ -75,7 +75,6 @@ export default function AdminDashboard() {
   const defaultCategoryId = categories?.[0]?._id || '';
   const [newProd, setNewProd] = useState({
     name: '',
-    sku: '',
     slug: '',
     category: defaultCategoryId,
     price: '',
@@ -86,8 +85,6 @@ export default function AdminDashboard() {
     stoneDetails: '',
     occasion: 'Bridal',
     availability: 'In Store & Ready',
-    shortDescription: '',
-    fullDescription: '',
     altText: '',
   });
 
@@ -220,16 +217,9 @@ export default function AdminDashboard() {
   const validateCreateForm = () => {
     const errs = {};
     if (!newProd.name.trim()) errs.name = 'Product name is required';
-    if (!newProd.sku.trim()) errs.sku = 'Unique SKU is required';
     if (!newProd.category) errs.category = 'Category is required';
     if (!newProd.price || Number(newProd.price) <= 0) {
       errs.price = 'Valid INR price is required';
-    }
-    if (!newProd.shortDescription.trim()) {
-      errs.shortDescription = 'Short description is required';
-    }
-    if (!newProd.fullDescription.trim()) {
-      errs.fullDescription = 'Full description is required';
     }
     if (!newProd.metalType) errs.metalType = 'Metal type is required';
     if (!newProd.purity.trim()) errs.purity = 'Purity is required';
@@ -256,7 +246,6 @@ export default function AdminDashboard() {
     try {
       const formData = new FormData();
       formData.append('name', newProd.name.trim());
-      formData.append('sku', newProd.sku.trim().toUpperCase());
       if (newProd.slug.trim()) {
         formData.append('slug', newProd.slug.trim().toLowerCase());
       }
@@ -275,8 +264,6 @@ export default function AdminDashboard() {
       }
       formData.append('occasion', newProd.occasion);
       formData.append('availability', newProd.availability);
-      formData.append('shortDescription', newProd.shortDescription.trim());
-      formData.append('fullDescription', newProd.fullDescription.trim());
       formData.append('altText', newProd.altText.trim());
 
       const mainIdx = Math.max(
@@ -313,7 +300,6 @@ export default function AdminDashboard() {
       setCreateErrors({});
       setNewProd({
         name: '',
-        sku: '',
         slug: '',
         category: categories?.[0]?._id || '',
         price: '',
@@ -324,8 +310,6 @@ export default function AdminDashboard() {
         stoneDetails: '',
         occasion: 'Bridal',
         availability: 'In Store & Ready',
-        shortDescription: '',
-        fullDescription: '',
         altText: '',
       });
 
@@ -370,8 +354,6 @@ export default function AdminDashboard() {
       category: catId,
       metalType: product.metalType || 'Gold',
       purity: product.purity || '',
-      shortDescription: product.shortDescription || '',
-      fullDescription: product.fullDescription || '',
     });
     setRetainedGallery(existingImgs);
     newEditFiles.forEach((f) => URL.revokeObjectURL(f.previewUrl));
@@ -512,8 +494,6 @@ export default function AdminDashboard() {
       }
       formData.append('metalType', editingProduct.metalType);
       formData.append('purity', editingProduct.purity.trim());
-      formData.append('shortDescription', editingProduct.shortDescription.trim());
-      formData.append('fullDescription', editingProduct.fullDescription.trim());
 
       const normalizedRetained = retainedGallery.map((img, idx) => ({
         _id: img._id,
@@ -708,7 +688,7 @@ export default function AdminDashboard() {
                 </div>
 
                 <form onSubmit={handleCreateProduct} className="space-y-4 text-xs" noValidate>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block font-medium text-[#34241D] mb-1">
                         Product Name *
@@ -722,21 +702,6 @@ export default function AdminDashboard() {
                       />
                       {createErrors.name && (
                         <p className="text-[11px] text-red-600 mt-1">{createErrors.name}</p>
-                      )}
-                    </div>
-                    <div>
-                      <label className="block font-medium text-[#34241D] mb-1">
-                        Unique SKU *
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="e.g. AAR-KND-025"
-                        value={newProd.sku}
-                        onChange={(e) => setNewProd({ ...newProd, sku: e.target.value })}
-                        className="w-full px-3 py-2 rounded-lg border border-[#E6DBC9] bg-white uppercase"
-                      />
-                      {createErrors.sku && (
-                        <p className="text-[11px] text-red-600 mt-1">{createErrors.sku}</p>
                       )}
                     </div>
                     <div>
@@ -889,47 +854,6 @@ export default function AdminDashboard() {
                           </option>
                         ))}
                       </select>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block font-medium text-[#34241D] mb-1">
-                        Short Description *
-                      </label>
-                      <textarea
-                        rows="2"
-                        placeholder="Concise summary shown on product cards and top of detail page..."
-                        value={newProd.shortDescription}
-                        onChange={(e) =>
-                          setNewProd({ ...newProd, shortDescription: e.target.value })
-                        }
-                        className="w-full px-3 py-2 rounded-lg border border-[#E6DBC9] bg-white"
-                      />
-                      {createErrors.shortDescription && (
-                        <p className="text-[11px] text-red-600 mt-1">
-                          {createErrors.shortDescription}
-                        </p>
-                      )}
-                    </div>
-                    <div>
-                      <label className="block font-medium text-[#34241D] mb-1">
-                        Full Description *
-                      </label>
-                      <textarea
-                        rows="2"
-                        placeholder="Detailed craftsmanship and design notes..."
-                        value={newProd.fullDescription}
-                        onChange={(e) =>
-                          setNewProd({ ...newProd, fullDescription: e.target.value })
-                        }
-                        className="w-full px-3 py-2 rounded-lg border border-[#E6DBC9] bg-white"
-                      />
-                      {createErrors.fullDescription && (
-                        <p className="text-[11px] text-red-600 mt-1">
-                          {createErrors.fullDescription}
-                        </p>
-                      )}
                     </div>
                   </div>
 

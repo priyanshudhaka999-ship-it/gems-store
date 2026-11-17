@@ -43,20 +43,18 @@ export default function ProductDetailsPage() {
   }, [product]);
 
   const [activeImgIdx, setActiveImgIdx] = useState(0);
-  const [showFullDesc, setShowFullDesc] = useState(false);
   const [moreSpecsOpen, setMoreSpecsOpen] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
   useEffect(() => {
     setActiveImgIdx(0);
-    setShowFullDesc(false);
     setMoreSpecsOpen(false);
     setLightboxOpen(false);
     if (product) {
       addRecentlyViewed(product);
       updatePageMeta({
         title: `${product.name} | AARANYA`,
-        description: `${product.shortDescription} — SKU ${product.sku}, ${product.purity}, priced at ${formatINR(
+        description: `${product.name} — SKU ${product.sku}, ${product.purity}, priced at ${formatINR(
           product.price
         )}.`,
         image: orderedImages[0]?.url,
@@ -125,10 +123,6 @@ export default function ProductDetailsPage() {
       : null,
     product.availability ? { label: 'Availability', value: product.availability } : null,
   ].filter(Boolean);
-
-  const hasLongDescription =
-    product.fullDescription &&
-    product.fullDescription.trim() !== (product.shortDescription || '').trim();
 
   const hasAdditionalDetails =
     (product.specifications && product.specifications.length > 0) ||
@@ -306,25 +300,6 @@ export default function ProductDetailsPage() {
                 )}
               </div>
             </div>
-          </div>
-
-          {/* Short Description + Read More */}
-          <div className="space-y-2 text-sm text-[#34241D] leading-relaxed">
-            <p>{product.shortDescription}</p>
-            {hasLongDescription && (
-              <>
-                {showFullDesc && (
-                  <p className="text-[#695B4E] pt-1">{product.fullDescription}</p>
-                )}
-                <button
-                  type="button"
-                  onClick={() => setShowFullDesc((prev) => !prev)}
-                  className="text-xs font-medium text-[#B88A4A] hover:text-[#34241D] underline underline-offset-4 transition-colors"
-                >
-                  {showFullDesc ? 'Show less' : 'Read more'}
-                </button>
-              </>
-            )}
           </div>
 
           {/* Key Facts List */}
