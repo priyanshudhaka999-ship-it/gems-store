@@ -41,11 +41,11 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
         <Link to="/" className="flex items-center gap-3.5 group focus:outline-none">
           <div className="w-10 h-10 rounded-full border border-[#C89B5C] bg-[#3C2B20] flex items-center justify-center font-serif text-xl font-semibold text-[#FBF7F0] group-hover:border-[#D8B982] transition-colors">
-            N
+            J
           </div>
           <div className="min-w-0">
             <span className="font-serif text-lg sm:text-[26px] tracking-[0.04em] sm:tracking-[0.12em] font-semibold text-[#FAF8F4] block leading-none">
-              New Nanda Jwellers
+              Jwellery
             </span>
             <span className="hidden sm:block text-[11px] tracking-[0.06em] text-[#D8B982] mt-1 font-normal">
               {settings?.tagline || 'Timeless Indian Jewellery'}

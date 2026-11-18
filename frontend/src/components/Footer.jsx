@@ -25,10 +25,10 @@ export default function Footer() {
           <div className="md:col-span-4 space-y-4">
             <Link to="/" className="inline-flex items-center gap-3">
               <div className="w-9 h-9 rounded-full border border-[#B88A4A] bg-[#FAF8F4] flex items-center justify-center font-serif text-lg font-semibold text-[#34241D]">
-                N
+                J
               </div>
               <span className="font-serif text-2xl tracking-[0.08em] font-semibold text-[#34241D]">
-                New Nanda Jwellers
+                Jwellery
               </span>
             </Link>
             <p className="text-sm text-[#695B4E] leading-relaxed max-w-sm">
