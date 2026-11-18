@@ -16,7 +16,6 @@ export default function ContactPage() {
     email: '',
     preferredVisitDate: '',
     subject: '',
-    message: '',
   });
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
@@ -34,8 +33,6 @@ export default function ContactPage() {
     if (form.phone.trim().length < 8) errs.phone = 'Please enter a valid phone or WhatsApp number';
     if (!/^\S+@\S+\.\S+$/.test(form.email.trim())) errs.email = 'Please enter a valid email address';
     if (!form.subject) errs.subject = 'Please select an enquiry subject';
-    if (form.message.trim().length < 10)
-      errs.message = 'Please enter a message of at least 10 characters';
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -164,19 +161,6 @@ export default function ContactPage() {
                 <option value="General Showroom Enquiry">General Showroom Enquiry</option>
               </select>
               {errors.subject && <p className="text-[11px] text-red-600 mt-1">{errors.subject}</p>}
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-[#3C2B20] mb-1">
-                Your Message (Min 10 characters) *
-              </label>
-              <textarea
-                rows="4"
-                value={form.message}
-                onChange={(e) => setForm({ ...form, message: e.target.value })}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E9DED0] bg-white text-xs"
-              />
-              {errors.message && <p className="text-[11px] text-red-600 mt-1">{errors.message}</p>}
             </div>
 
             <button
